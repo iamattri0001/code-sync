@@ -1,3 +1,3 @@
-const toastSettings = { className: "bg-primary-900 text-primary-100" };
+const toastSettings = { className: "toast-custom" };
 
 export default toastSettings;

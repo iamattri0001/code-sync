@@ -44,13 +44,15 @@ const EditorPage = () => {
 
       socketRef.current.on(ACTION.JOINED, ({ clients, username, socketId }) => {
         if (username !== location.state?.username)
-          toast.success(`${username} has joined`, toastSettings);
+          toast.success(`${username} has joined`, {
+            className: "toast-custom",
+          });
         setActiveUsers(clients);
       });
 
       socketRef.current.on(ACTION.DISCONNCTED, ({ socketId, username }) => {
         toast(`${username} has left`, {
-          ...toastSettings,
+          className: "toast-custom",
           icon: <FcInfo className="text-[24px]" />,
         });
 

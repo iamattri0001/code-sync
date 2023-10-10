@@ -63,7 +63,7 @@ io.on("connection", (socket) => {
     socket.leave();
   });
 
-  socket.on(ACTION.CODE_CHANGE, ({ roomId, code, socketId }) => {
-    io.to(roomId).emit(ACTION.CODE_CHANGE, { code, socketId });
+  socket.on(ACTION.CODE_CHANGE, ({ roomId, code }) => {
+    socket.in(roomId).emit(ACTION.CODE_CHANGE, { code });
   });
 });

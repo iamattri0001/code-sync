@@ -24,13 +24,13 @@ const Editor = ({ socketRef, roomId }) => {
       );
 
       editorRef.current.on("change", (instance, changes) => {
+        console.log(changes);
         const { origin } = changes;
         const code = instance.getValue();
         if (origin !== "setValue") {
           socketRef.current.emit(ACTION.CODE_CHANGE, {
             roomId,
             code,
-            socketId: socketRef.current.id,
           });
         }
       });
@@ -40,9 +40,8 @@ const Editor = ({ socketRef, roomId }) => {
 
   useEffect(() => {
     if (socketRef.current) {
-      socketRef.current.on(ACTION.CODE_CHANGE, ({ code, socketId }) => {
-        if (code !== null && socketId !== socketRef.current.id)
-          editorRef.current.setValue(code);
+      socketRef.current.on(ACTION.CODE_CHANGE, ({ code }) => {
+        if (code !== null) editorRef.current.setValue(code);
       });
     }
   }, [socketRef.current]);
