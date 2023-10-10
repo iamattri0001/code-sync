@@ -1,9 +1,22 @@
 import { useNavigate, useParams } from "react-router-dom";
 import ActiveUsers from "./ActiveUsers";
+import toast from "react-hot-toast";
+import toastSettings from "../constants/toastSettings";
 
 const Aside = ({ activeUsers }) => {
   const navigate = useNavigate();
   const { roomId } = useParams();
+
+  const handleCopy = async () => {
+    try {
+      await window.navigator.clipboard.writeText(roomId);
+      toast.success("Copied to clipboard", toastSettings);
+    } catch (err) {
+      toast.error("Couldn't copy, try again", toastSettings);
+      console.error(err);
+    }
+  };
+
   return (
     <div className="w-[13vw] bg-primary-900 flex flex-col">
       <div className="bg-primary-400 h-[15vh] text-primary-950 text-2xl flex items-center justify-center">
@@ -17,19 +30,7 @@ const Aside = ({ activeUsers }) => {
         <button className="btn-secondary w-[40%]" onClick={() => navigate("/")}>
           Leave
         </button>
-        <button
-          className="btn w-[40%]"
-          onClick={(e) => {
-            window.navigator.clipboard.writeText(roomId);
-            e.target.innerText = "Copied";
-            e.target.classList.add("btn-disable");
-
-            setTimeout(() => {
-              e.target.innerText = "Copy ID";
-              e.target.classList.remove("btn-disable");
-            }, 1500);
-          }}
-        >
+        <button className="btn w-[40%]" onClick={handleCopy}>
           Copy ID
         </button>
       </div>

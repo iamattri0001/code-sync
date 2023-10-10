@@ -19,6 +19,7 @@ const EditorPage = () => {
   if (!location.state) return <Navigate to={"/"} />;
 
   const socketRef = useRef(null);
+  const codeRef = useState("");
 
   const reactNavigate = useNavigate();
   const { roomId } = useParams();
@@ -44,21 +45,26 @@ const EditorPage = () => {
 
       socketRef.current.on(ACTION.JOINED, ({ clients, username, socketId }) => {
         if (username !== location.state?.username)
-          toast.success(`${username} has joined`, {
-            className: "toast-custom",
-          });
+          toast.success(`${username} has joined`, toastSettings);
         setActiveUsers(clients);
+        socketRef.current.emit(ACTION.SYNC_CODE, {
+          code: codeRef.current,
+          socketId,
+        });
       });
 
-      socketRef.current.on(ACTION.DISCONNCTED, ({ socketId, username }) => {
+      socketRef.current.on(ACTION.DISCONNCTED, ({ username, socketId }) => {
+        console.log(socketId);
         toast(`${username} has left`, {
-          className: "toast-custom",
+          ...toastSettings,
           icon: <FcInfo className="text-[24px]" />,
         });
 
+        console.log(socketId);
+
         setActiveUsers((prevState) => {
           let newUsers = [...prevState];
-          newUsers = newUsers.filter((user) => user.username !== username);
+          newUsers = newUsers.filter((user) => user.socketId !== socketId);
           return newUsers;
         });
       });
@@ -75,7 +81,11 @@ const EditorPage = () => {
     <div className="bg-primary-950 min-h-screen text-primary-50 flex">
       <Aside activeUsers={activeUsers} />
       <div className="bg-primary-600 flex-grow">
-        <Editor socketRef={socketRef} roomId={roomId} />
+        <Editor
+          socketRef={socketRef}
+          roomId={roomId}
+          onCodeChange={(code) => (codeRef.current = code)}
+        />
       </div>
     </div>
   );

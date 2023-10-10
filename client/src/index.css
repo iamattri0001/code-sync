@@ -13,10 +13,6 @@
   .btn-secondary {
     @apply bg-transparent border-[0.5px] px-2 py-1 rounded hover:bg-primary-800 font-semibold text-sm;
   }
-
-  .toast-custom {
-    @apply bg-primary-900 text-primary-100;
-  }
 }
 
 .CodeMirror {

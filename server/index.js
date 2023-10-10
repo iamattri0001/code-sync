@@ -66,4 +66,8 @@ io.on("connection", (socket) => {
   socket.on(ACTION.CODE_CHANGE, ({ roomId, code }) => {
     socket.in(roomId).emit(ACTION.CODE_CHANGE, { code });
   });
+
+  socket.on(ACTION.SYNC_CODE, ({ socketId, code }) => {
+    io.to(socketId).emit(ACTION.CODE_CHANGE, { code });
+  });
 });

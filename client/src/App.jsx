@@ -6,10 +6,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 const App = () => {
   return (
     <>
-      <div className="toast-custom hidden">
-        {/* to include the CSS from tailwind for toast */}
-      </div>
-
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
