@@ -3,6 +3,7 @@ import Aside from "../components/Aside";
 import Editor from "../components/Editor";
 import { initSocket } from "../socket";
 import { ACTION } from "../actions/socketEvents";
+import { FcInfo } from "react-icons/fc";
 import {
   useLocation,
   useNavigate,
@@ -18,23 +19,11 @@ const EditorPage = () => {
   if (!location.state) return <Navigate to={"/"} />;
 
   const socketRef = useRef(null);
+
   const reactNavigate = useNavigate();
   const { roomId } = useParams();
 
-  const [activeUsers, setActiveUsers] = useState([
-    // { socketId: 1, username: "Deepanshu Atri" },
-    // { socketId: 1, username: "Attri" },
-    // { socketId: 1, username: "Attri" },
-    // { socketId: 1, username: "Attri" },
-    // { socketId: 1, username: "Deepanshu" },
-    // { socketId: 1, username: "Attri" },
-    // { socketId: 1, username: "Attri" },
-    // { socketId: 1, username: "Attri" },
-    // { socketId: 1, username: "Deepanshu" },
-    // { socketId: 1, username: "Attri" },
-    // { socketId: 1, username: "Attri" },
-    // { socketId: 1, username: "Attri" },
-  ]);
+  const [activeUsers, setActiveUsers] = useState([]);
 
   useEffect(() => {
     async function init() {
@@ -60,16 +49,31 @@ const EditorPage = () => {
       });
 
       socketRef.current.on(ACTION.DISCONNCTED, ({ socketId, username }) => {
-        console.log(socketId, username); /// here...
+        toast(`${username} has left`, {
+          ...toastSettings,
+          icon: <FcInfo className="text-[24px]" />,
+        });
+
+        setActiveUsers((prevState) => {
+          let newUsers = [...prevState];
+          newUsers = newUsers.filter((user) => user.username !== username);
+          return newUsers;
+        });
       });
     }
     init();
+
+    return () => {
+      socketRef.current.disconnect();
+      socketRef.current.off(ACTION.JOINED);
+      socketRef.current.off(ACTION.DISCONNCTED);
+    };
   }, []);
   return (
     <div className="bg-primary-950 min-h-screen text-primary-50 flex">
       <Aside activeUsers={activeUsers} />
       <div className="bg-primary-600 flex-grow">
-        <Editor />
+        <Editor socketRef={socketRef} roomId={roomId} />
       </div>
     </div>
   );

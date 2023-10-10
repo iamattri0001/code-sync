@@ -4,11 +4,20 @@
 
 @layer components {
   .btn {
-    @apply bg-primary-400 text-primary-950 px-2 py-1 rounded hover:bg-primary-500 transition-all;
+    @apply bg-primary-400 text-primary-950 font-semibold text-sm px-2 py-1 rounded hover:bg-primary-500 transition-all;
+  }
+
+  .btn-disable {
+    @apply bg-primary-600 text-primary-50 hover:bg-primary-600 transition-all;
   }
   .btn-secondary {
-    @apply bg-transparent border px-2 py-1 rounded hover:bg-primary-800;
+    @apply bg-transparent border-[0.5px] px-2 py-1 rounded hover:bg-primary-800 font-semibold text-sm;
   }
+}
+
+.CodeMirror {
+  height: 100vh;
+  font-size: 20px;
 }
 
 /* For WebKit (Chrome, Safari) */

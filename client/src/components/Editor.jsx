@@ -1,75 +1,52 @@
-import { useState } from "react";
-import Editor from "@monaco-editor/react";
-import { fontSizes, availableLanguages } from "../constants/editor";
+import React, { useEffect, useRef } from "react";
+import Codemirror from "codemirror";
+import "codemirror/lib/codemirror.css";
+import "codemirror/mode/javascript/javascript";
+import "codemirror/addon/edit/closetag";
+import "codemirror/addon/edit/closebrackets";
 
-const CodeEditor = () => {
-  const [content, setContent] = useState("//code here");
-  const [fontSize, setFontSize] = useState(fontSizes[0]);
-  const [lang, setLang] = useState("javascript");
+import "codemirror/theme/material.css";
+import { ACTION } from "../actions/socketEvents";
 
-  const handleChange = (value) => {
-    setContent(value);
-  };
+const Editor = ({ socketRef, roomId }) => {
+  const editorRef = useRef();
+  useEffect(() => {
+    async function init() {
+      editorRef.current = Codemirror.fromTextArea(
+        document.getElementById("realtimeEditor"),
+        {
+          mode: { name: "javascript", json: true },
+          theme: "material",
+          autoCloseTags: true,
+          autoCloseBrackets: true,
+          lineNumbers: true,
+        }
+      );
 
-  return (
-    <div className="h-full relative">
-      <div className="flex items-center absolute z-20 justify-center gap-x-1 right-3 top-2">
-        <select
-          id="lang-select"
-          className="bg-primary-800 outline-none rounded p-1"
-          value={lang}
-          onChange={(ev) => setLang(ev.target.value)}
-        >
-          {Object.keys(availableLanguages).map((lang, i) => {
-            return (
-              <option value={lang} key={i}>
-                {availableLanguages[lang].name}
-              </option>
-            );
-          })}
-        </select>
+      editorRef.current.on("change", (instance, changes) => {
+        const { origin } = changes;
+        const code = instance.getValue();
+        if (origin !== "setValue") {
+          socketRef.current.emit(ACTION.CODE_CHANGE, {
+            roomId,
+            code,
+            socketId: socketRef.current.id,
+          });
+        }
+      });
+    }
+    init();
+  }, []);
 
-        <select
-          id="font_size-select"
-          className="bg-primary-800 outline-none rounded p-1"
-          value={fontSize}
-          onChange={(ev) => setFontSize(ev.target.value)}
-        >
-          {fontSizes.map((size, i) => {
-            return (
-              <option value={size} key={i}>
-                {size}px
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      <Monaco
-        lang={lang}
-        fontSize={fontSize}
-        content={content}
-        handleChange={handleChange}
-      />
-    </div>
-  );
+  useEffect(() => {
+    if (socketRef.current) {
+      socketRef.current.on(ACTION.CODE_CHANGE, ({ code, socketId }) => {
+        if (code !== null && socketId !== socketRef.current.id)
+          editorRef.current.setValue(code);
+      });
+    }
+  }, [socketRef.current]);
+  return <textarea id="realtimeEditor"></textarea>;
 };
 
-export default CodeEditor;
-
-const Monaco = ({ content, handleChange, lang, fontSize }) => {
-  return (
-    <Editor
-      className="code-text"
-      height="100%"
-      width="100%"
-      language={lang}
-      theme="vs-dark"
-      onChange={handleChange}
-      value={content}
-      options={{
-        fontSize,
-        fontFamily: "Fira Code, monospace",
-      }}
-    />
-  );
-};
+export default Editor;

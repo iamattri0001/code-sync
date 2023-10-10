@@ -40,7 +40,6 @@ io.on("connection", (socket) => {
     userSocketMap[socket.id] = username;
     socket.join(roomId);
     const clients = getAllConnectedClients(roomId);
-    console.log(clients);
 
     clients.forEach(({ socketId }) => {
       io.to(socketId).emit(ACTION.JOINED, {
@@ -62,5 +61,9 @@ io.on("connection", (socket) => {
 
     delete userSocketMap[socket.id];
     socket.leave();
+  });
+
+  socket.on(ACTION.CODE_CHANGE, ({ roomId, code, socketId }) => {
+    io.to(roomId).emit(ACTION.CODE_CHANGE, { code, socketId });
   });
 });
