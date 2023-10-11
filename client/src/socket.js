@@ -7,7 +7,7 @@ export const initSocket = async () => {
   toast.promise(
     axios.get(process.env.REACT_APP_BACKEND_URL + "/api/active", {}),
     {
-      loading: "Please wait server is down",
+      loading: "Please wait, connecting to the server",
       error: "Couldn't establish connection with server",
       success: "Connected to server",
     },
