@@ -11,6 +11,15 @@ app.use(express.json());
 
 const ACTION = require("./socketEvents");
 
+app.get("/api/active", (req, res, next) => {
+  try {
+    return res.json({ active: true }).status(200);
+  } catch (err) {
+    res.json({ active: false }).status(500).console.log(err);
+    next();
+  }
+});
+
 const server = app.listen(process.env.PORT, () => {
   console.log("server started at port ", process.env.PORT);
 });

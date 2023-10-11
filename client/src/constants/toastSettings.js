@@ -1,3 +1,8 @@
-const toastSettings = { className: "bg-primary-900 text-primary-100" };
+const toastSettings = {
+  style: {
+    background: "#222",
+    color: "#eee",
+  },
+};
 
 export default toastSettings;
