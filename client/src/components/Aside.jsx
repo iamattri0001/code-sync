@@ -33,7 +33,7 @@ const Aside = ({ activeUsers }) => {
     <div className="sm:w-[30vw] md:w-[25vw] lg:w-[15vw] bg-dark-800 flex flex-col">
       <div className="bg-dark-600 h-[10vh] text-primary-200 text-2xl flex items-center justify-center">
         <h1 className="text-lg md:text-xl lg:text-2xl text-center">
-          Code-Sync{" "}
+          Sync Script
         </h1>
       </div>
       <div className="flex-grow flex flex-col items-center py-4 justify-start gap-y-3">
