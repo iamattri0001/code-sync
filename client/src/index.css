@@ -1,23 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
   .btn {
-    @apply bg-primary-400 text-primary-950 font-semibold text-sm px-2 py-1 rounded hover:bg-primary-500 transition-all;
+    @apply bg-light-500 text-white text-sm px-3 py-1.5 rounded hover:bg-light-400 transition-all;
   }
 
   .btn-disable {
     @apply bg-primary-600 text-primary-50 hover:bg-primary-600 transition-all;
   }
   .btn-secondary {
-    @apply bg-transparent border-[0.5px] px-2 py-1 rounded hover:bg-primary-800 font-semibold text-sm;
+    @apply bg-transparent border-[0.5px] text-sm px-3 py-1.5 rounded hover:bg-dark-700 transition-all;
   }
 }
 
+:root {
+  font-family: "Poppins", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Orbitron", sans-serif;
+}
+
 .CodeMirror {
-  height: 100vh;
-  font-size: 20px;
+  height: 80vh;
+  width: 90%;
+  padding-top: 4px;
+  border-radius: 4px;
+}
+
+.main {
+  background: url("./assets/site_bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* For WebKit (Chrome, Safari) */

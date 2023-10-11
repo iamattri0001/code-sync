@@ -78,9 +78,9 @@ const EditorPage = () => {
     };
   }, []);
   return (
-    <div className="bg-primary-950 min-h-screen text-primary-50 flex">
+    <div className="min-h-screen text-primary-50 flex">
       <Aside activeUsers={activeUsers} />
-      <div className="bg-primary-600 flex-grow">
+      <div className="flex-grow flex items-center justify-center">
         <Editor
           socketRef={socketRef}
           roomId={roomId}

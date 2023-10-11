@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const App = () => {
   return (
-    <>
+    <div className="main">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -13,7 +13,7 @@ const App = () => {
         </Routes>
       </BrowserRouter>
       <Toaster />
-    </>
+    </div>
   );
 };
 

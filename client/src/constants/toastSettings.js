@@ -1,6 +1,6 @@
 const toastSettings = {
   style: {
-    background: "#222",
+    background: "#2b2145",
     color: "#eee",
   },
 };
