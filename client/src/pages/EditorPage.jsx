@@ -39,7 +39,7 @@ const EditorPage = () => {
 
       const handleSocketError = (err) => {
         console.error(err);
-        toast.error("Socket connection failed, try again later", toastSettings);
+        toast.error("Socket connection failed, try again", toastSettings);
         reactNavigate("/");
       };
 
@@ -54,13 +54,10 @@ const EditorPage = () => {
       });
 
       socketRef.current.on(ACTION.DISCONNCTED, ({ username, socketId }) => {
-        console.log(socketId);
         toast(`${username} has left`, {
           ...toastSettings,
           icon: <FcInfo className="text-[24px]" />,
         });
-
-        console.log(socketId);
 
         setActiveUsers((prevState) => {
           let newUsers = [...prevState];
@@ -87,6 +84,13 @@ const EditorPage = () => {
           onCodeChange={(code) => (codeRef.current = code)}
         />
       </div>
+      <a
+        className="fixed text-sm text-blue-300 hover:text-blue-400 transition-all bottom-1 right-3"
+        href="https://www.linkedin.com/in/deepanshu-attri-17a895241/"
+        target="_blank"
+      >
+        @Deepanshu Attri
+      </a>
     </div>
   );
 };

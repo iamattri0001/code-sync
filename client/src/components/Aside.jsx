@@ -31,7 +31,7 @@ const Aside = ({ activeUsers }) => {
 
   return (
     <div className="sm:w-[30vw] md:w-[25vw] lg:w-[15vw] bg-dark-800 flex flex-col">
-      <div className="bg-dark-600 h-[10vh] text-primary-200 text-2xl flex items-center justify-center">
+      <div className="bg-dark-600 h-[10vh] px-2 text-primary-200 text-2xl flex items-center justify-center">
         <h1 className="text-lg md:text-xl lg:text-2xl text-center">
           Sync Script
         </h1>
@@ -42,13 +42,13 @@ const Aside = ({ activeUsers }) => {
       </div>
       <div className="h-[15vh] flex flex-col md:flex-row justify-center items-center gap-y-3 md:gap-x-3">
         <button
-          className="btn-secondary w-[50%] md:w-[40%]"
+          className="btn-secondary w-[70%] md:w-[40%]"
           onClick={handleOpen}
         >
           Leave
         </button>
 
-        <button className="btn w-[50%] md:w-[40%]" onClick={handleCopy}>
+        <button className="btn w-[70%] md:w-[40%]" onClick={handleCopy}>
           Copy ID
         </button>
       </div>
