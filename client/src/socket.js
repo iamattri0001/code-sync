@@ -17,7 +17,7 @@ export const initSocket = async () => {
   const options = {
     "force new connection": true,
     reconnectionAttempts: 2, // Set the maximum number of reconnection attempts to 2
-    timeout: 10000,
+    timeout: 20000,
     transport: ["websocket"],
   };
 
